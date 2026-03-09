@@ -1,0 +1,26 @@
+name: API Tests
+
+on:
+  push:
+    branches:
+      - main
+    schedule:
+      - cron: "25 19 * * *"
+
+jobs:
+  api-tests:
+    name: Run API Automation Tests
+    container:
+      image: maven:4.0.0-jdk-17
+
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout code
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Run Maven tests
+      - name: Run API tests
+        run: mvn clean test
+
