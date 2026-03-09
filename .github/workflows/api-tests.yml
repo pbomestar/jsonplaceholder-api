@@ -5,13 +5,13 @@ on:
     branches:
       - main
     schedule:
-      - cron: "25 19 * * *"
+      - cron: "30 19 * * *"
 
 jobs:
   api-tests:
     name: Run API Automation Tests
     container:
-      image: maven:4.0.0-jdk-17
+      image: maven:4.0.0‑rc‑5‑eclipse‑temurin‑17
 
     runs-on: ubuntu-latest
 
@@ -24,3 +24,10 @@ jobs:
       - name: Run API tests
         run: mvn clean test
 
+      # Upload Cucumber reports
+      - name: Upload Cucumber Reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cucumber-report
+          path: target/
